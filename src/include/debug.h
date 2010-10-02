@@ -24,15 +24,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <machine.h>
+#ifndef DEBUG_H_
+#define DEBUG_H_
 
-void machine_set_params(struct machine *mach, double r_maj, double r_min,
-												double rho, int n, double j) {
-	mach->r_maj = r_maj;
-	mach->r_min = r_min;
-	mach->rho = rho;
-	mach->n = n;
-	mach->j = j;
+enum debug_level {
+	DEBUG_INFO,
+	DEBUG_WARN,
+	DEBUG_ERROR,
+	DEBUG_NONE
+};
 
-	return;
-}
+const char debug_acronym[] = { 'I', 'W', 'E', '*' };
+
+#endif /* DEBUG_H_ */

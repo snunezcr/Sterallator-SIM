@@ -24,15 +24,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <machine.h>
+#ifndef MODULE_H_
+#define MODULE_H_
 
-void machine_set_params(struct machine *mach, double r_maj, double r_min,
-												double rho, int n, double j) {
-	mach->r_maj = r_maj;
-	mach->r_min = r_min;
-	mach->rho = rho;
-	mach->n = n;
-	mach->j = j;
+#include <debug.h>
 
-	return;
-}
+#define	MODULE_DESC_LENGTH	400
+
+struct module {
+	char *name;
+	int version_major;
+	int version_minor;
+	enum debug_level debug;
+	char *description;
+};
+
+void module_set_debug(struct module *, enum debug_level);
+void module_describe(const struct module *, char *);
+
+#endif /* MODULE_H_ */

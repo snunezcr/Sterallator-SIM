@@ -34,10 +34,10 @@ struct machine {
 	double r_maj;			/* Machine radius */
 	double r_min;			/* Toroidal radius */
 	double rho;				/* Distance from the toroidal axis to (x, y, z) */
-	int n;				/* Number of turns for each coil */
+	int n;					/* Number of turns for each coil */
 	double j;				/* Machine current */
 };
 
-int machine_set_params(struct machine *, double, double, double, int, double);
+void machine_set_params(struct machine *, double, double, double, int, double);
 
 #endif /* MACHINE_H_ */

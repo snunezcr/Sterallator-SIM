@@ -26,7 +26,7 @@
 
 #import <machine.h>
 
-#ifndef FIELD_H
+#ifndef FIELD_H_
 #define FIELD_H_
 
 struct vector {
@@ -40,11 +40,17 @@ struct coil_point {
 	double toroidal;
 };
 
+struct module field_module;
+
+void field_module_init(struct module *);
+
 int field_count_lines(const char *);
 int field_load_file(const char *, struct coil_point *);
+
+void field_init_coil_point(struct coil_point *);
 int field_compute_point(const struct machine *, struct coil_point *,
 															struct vector *);
-int field_compute_coil(const struct machine *, struct coil_point *,
+int field_compute_coil(const struct machine *, int, struct coil_point *,
 															struct vector *);
 
 #endif /* FIELD_H_ */

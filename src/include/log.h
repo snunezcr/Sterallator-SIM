@@ -24,15 +24,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <machine.h>
+#ifndef LOG_H_
+#define LOG_H_
 
-void machine_set_params(struct machine *mach, double r_maj, double r_min,
-												double rho, int n, double j) {
-	mach->r_maj = r_maj;
-	mach->r_min = r_min;
-	mach->rho = rho;
-	mach->n = n;
-	mach->j = j;
+#include <stdio.h>
+#include <module.h>
 
-	return;
-}
+#define LOG_STDOUT	0
+#define LOG_FILE	1
+
+struct log {
+	FILE *file_ptr;
+	char *file_name;
+};
+
+void log_entry(int, struct module *, void *, int, char *, char);
+
+#endif /* LOG_H_ */

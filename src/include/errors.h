@@ -24,15 +24,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <machine.h>
+#ifndef ERRORS_H_
+#define ERRORS_H_
 
-void machine_set_params(struct machine *mach, double r_maj, double r_min,
-												double rho, int n, double j) {
-	mach->r_maj = r_maj;
-	mach->r_min = r_min;
-	mach->rho = rho;
-	mach->n = n;
-	mach->j = j;
+#include <module.h>
 
-	return;
-}
+#define ENOERR		(0)
+#define EINVFILE	(1)
+#define ENOTNULL	(2)
+#define ENULL		(3)
+#define ECOILCOMP	(4)
+#define EPOINTCOMP	(5)
+
+const char *error_messages[] = {
+		"no error occurred",
+		"invalid file format",
+		"pointer is not null, memory could not be assigned",
+		"pointer is null, reference unusable",
+		"coil magnetic field computation failed",
+		"point magnetic field computation failed"
+};
+
+void error_describe(const struct module *, int, char *);
+
+#endif /* ERRORS_H_ */
