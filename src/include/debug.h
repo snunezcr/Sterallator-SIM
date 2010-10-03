@@ -34,6 +34,4 @@ enum debug_level {
 	DEBUG_NONE
 };
 
-const char debug_acronym[] = { 'I', 'W', 'E', '*' };
-
 #endif /* DEBUG_H_ */

@@ -30,6 +30,21 @@
 #include <time.h>
 #include <log.h>
 
+static char debug_acronym[] = { 'I', 'W', 'E', '*' };
+
+const char *error_messages[] = {
+		"no error occurred",
+		"invalid file format",
+		"pointer is not null, memory could not be assigned",
+		"pointer is null, reference unusable",
+		"coil magnetic field computation failed",
+		"point magnetic field computation failed",
+		"file has already been opened",
+		"invalid option",
+		"file could not be opened",
+		"value is not valid"
+};
+
 void log_module_init(struct module *mod) {
 	mod->name = "History log";
 	mod->debug = DEBUG_INFO;
@@ -78,6 +93,16 @@ void log_close(struct log *history) {
 	if (history->file_ptr != NULL)
 		if (history->file_ptr != stdout)
 			fclose(history->file_ptr);
+
+	return;
+}
+
+void log_error_describe(const struct module *mod, int code, char *dst) {
+	dst = (char *) malloc (ERROR_MAX_LENGTH * sizeof(char));
+	dst = memset(dst, '\0', MODULE_DESC_LENGTH);
+
+	sprintf(dst, "module: %s\tcode: %d\tmessage: %s", mod->name, -1 * code,
+													error_messages[-1 * code]);
 
 	return;
 }

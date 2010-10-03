@@ -36,8 +36,11 @@ struct machine {
 	double rho;				/* Distance from the toroidal axis to (x, y, z) */
 	int n;					/* Number of turns for each coil */
 	double j;				/* Machine current */
+	double poloidal;		/* Reference poloidal angle */
+	double toroidal;		/* Reference toroidal angle */
 };
 
-void machine_set_params(struct machine *, double, double, double, int, double);
+void machine_set_params(struct machine *, double, double, double, int, double,
+																double, double);
 
 #endif /* MACHINE_H_ */

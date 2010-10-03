@@ -38,20 +38,9 @@
 #define EOPEN		(6)
 #define EINVOPTION	(7)
 #define ENOTOPEN	(8)
+#define EINVVALUE	(9)
 
 #define ERROR_MAX_LENGTH	200
-
-const char *error_messages[] = {
-		"no error occurred",
-		"invalid file format",
-		"pointer is not null, memory could not be assigned",
-		"pointer is null, reference unusable",
-		"coil magnetic field computation failed",
-		"point magnetic field computation failed",
-		"file has already been opened",
-		"invalid option",
-		"file could not be opened"
-};
 
 void error_describe(const struct module *, int, char *);
 

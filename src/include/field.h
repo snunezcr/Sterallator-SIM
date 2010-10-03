@@ -48,7 +48,7 @@ int field_count_lines(const char *);
 int field_load_file(const char *, struct coil_point *);
 
 void field_init_coil_point(struct coil_point *);
-int field_compute_point(const struct machine *, struct coil_point *,
+int field_compute_point(const struct machine *, struct coil_point *, int, int,
 															struct vector *);
 int field_compute_coil(const struct machine *, int, struct coil_point *,
 															struct vector *);

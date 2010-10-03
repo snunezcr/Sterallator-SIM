@@ -46,6 +46,7 @@ void log_module_init(struct module *);
 void log_init(struct log *);
 int log_open(struct log *, struct module *, int);
 void log_close(struct log *);
+void log_error_describe(const struct module *, int, char *);
 void log_entry(int, struct module *, void *, char *, int, struct log *);
 
 #endif /* LOG_H_ */
