@@ -24,35 +24,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ERRORS_H_
-#define ERRORS_H_
+#include <errors.h>
 
-#include <module.h>
+void error_describe(const struct module *mod, int code, char *dst) {
+	dst = (char *) malloc (ERROR_MAX_LENGTH * sizeof(char));
+	dst = memset(dst, '\0', MODULE_DESC_LENGTH);
 
-#define ENOERR		(0)
-#define EINVFILE	(1)
-#define ENOTNULL	(2)
-#define ENULL		(3)
-#define ECOILCOMP	(4)
-#define EPOINTCOMP	(5)
-#define EOPEN		(6)
-#define EINVOPTION	(7)
-#define ENOTOPEN	(8)
+	sprintf(dst, "module: %s\tcode: %d\tmessage: %s", mod->name, -1 * code,
+													error_messages[-1 * code]);
 
-#define ERROR_MAX_LENGTH	200
-
-const char *error_messages[] = {
-		"no error occurred",
-		"invalid file format",
-		"pointer is not null, memory could not be assigned",
-		"pointer is null, reference unusable",
-		"coil magnetic field computation failed",
-		"point magnetic field computation failed",
-		"file has already been opened",
-		"invalid option",
-		"file could not be opened"
-};
-
-void error_describe(const struct module *, int, char *);
-
-#endif /* ERRORS_H_ */
+	return;
+}

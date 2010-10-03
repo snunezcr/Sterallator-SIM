@@ -30,14 +30,22 @@
 #include <stdio.h>
 #include <module.h>
 
-#define LOG_STDOUT	0
-#define LOG_FILE	1
+#define LOG_STDOUT			0
+#define LOG_FILE			1
+#define LOG_MAX_SIZE		300
 
 struct log {
 	FILE *file_ptr;
 	char *file_name;
 };
 
-void log_entry(int, struct module *, void *, int, char *, char);
+struct module log_module;
+struct log history;
+
+void log_module_init(struct module *);
+void log_init(struct log *);
+int log_open(struct log *, struct module *, int);
+void log_close(struct log *);
+void log_entry(int, struct module *, void *, char *, int, struct log *);
 
 #endif /* LOG_H_ */
