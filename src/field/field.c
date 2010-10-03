@@ -32,6 +32,8 @@
 #include <field.h>
 #include <log.h>
 
+struct module field_module;
+
 void field_module_init(struct module *mod) {
 	mod->name = "Field calculation";
 	mod->debug = DEBUG_ERROR;

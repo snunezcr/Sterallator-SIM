@@ -39,9 +39,6 @@ struct log {
 	char *file_name;
 };
 
-struct module log_module;
-struct log history;
-
 void log_module_init(struct module *);
 void log_init(struct log *);
 int log_open(struct log *, struct module *, int);

@@ -30,6 +30,10 @@
 #include <time.h>
 #include <log.h>
 
+
+struct module log_module;
+struct log history;
+
 static char debug_acronym[] = { 'I', 'W', 'E', '*' };
 
 const char *error_messages[] = {

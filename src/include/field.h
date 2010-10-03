@@ -40,8 +40,6 @@ struct coil_point {
 	double toroidal;
 };
 
-struct module field_module;
-
 void field_module_init(struct module *);
 
 int field_count_lines(const char *);
