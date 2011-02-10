@@ -113,7 +113,8 @@ void field_init_coil_point(struct coil_point *point) {
 }
 
 int field_compute_point(const struct machine *mach, struct coil_point *point,
-									int count, int i, struct vector *field) {
+								int count, int i, struct vector *field,
+								double poloidal, double toroidal, double rh) {
 	/* Arithmetic pre-calculations:
 	 *
 	 * In order to avoid loss in execution time, the main problem is divided
@@ -142,16 +143,16 @@ int field_compute_point(const struct machine *mach, struct coil_point *point,
 	cos_tor_b = cos(point[(i + 1) % count].toroidal);
 	sin_pol_b = sin(point[(i + 1) % count].poloidal);
 	sin_tor_b = sin(point[(i + 1) % count].toroidal);
-	cos_pol_m = cos(mach->poloidal);
-	cos_tor_m = cos(mach->toroidal);
-	sin_pol_m = sin(mach->poloidal);
-	sin_tor_m = sin(mach->toroidal);
+	cos_pol_m = cos(poloidal);
+	cos_tor_m = cos(toroidal);
+	sin_pol_m = sin(poloidal);
+	sin_tor_m = sin(toroidal);
 
 	/* Obtain data from the machine description */
 	rj = mach->r_maj;
 	rn = mach->r_min;
 	j = mach->j;
-	rho = mach->rho;
+	rho = rh;
 	n = mach->n;
 
 	/* Precompute constant products */
@@ -229,11 +230,14 @@ int field_compute_point(const struct machine *mach, struct coil_point *point,
 }
 
 int field_compute_coil(const struct machine *mach, int count,
-							struct coil_point *point, struct vector *field) {
+							struct coil_point *point, struct vector *field,
+							double poloidal, double toroidal, double rh) {
 	int i;
 
 	for (i = 0; i < count; i++)
-		if (field_compute_point(mach, point, i, count, field) == -EPOINTCOMP) {
+		if (field_compute_point(mach, point, i, count, field,
+										poloidal, toroidal, rh)
+															== -EPOINTCOMP) {
 			return -ECOILCOMP;
 		}
 

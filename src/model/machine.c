@@ -27,14 +27,11 @@
 #include <machine.h>
 
 void machine_set_params(struct machine *mach, double r_maj, double r_min,
-						double rho, int n, double j, double pol, double tor) {
+						double rho, int n, double j) {
 	mach->r_maj = r_maj;
 	mach->r_min = r_min;
-	mach->rho = rho;
 	mach->n = n;
 	mach->j = j;
-	mach->poloidal = pol;
-	mach->toroidal = tor;
 
 	return;
 }
