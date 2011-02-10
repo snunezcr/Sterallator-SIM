@@ -24,19 +24,43 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MACHINE_H_
-#define MACHINE_H_
+#include <machine.h>
+#include <field.h>
+#include <log.h>
 
-#define MU0_4PI	0.0000001
-#define TORADS	0.01745329251994
+void usage(const char *);
 
-struct machine {
-	double r_maj;			/* Machine radius */
-	double r_min;			/* Toroidal radius */
-	int n;					/* Number of turns for each coil */
-	double j;				/* Machine current */
-};
+int main(int argc, char *argv[]) {
+	/* Structure that represents the machine */
+	struct machine sterallator;
 
-void machine_set_params(struct machine *, double, double, int, double);
+	/* Structures for the position and magnetic field of one location */
+	struct coil_point point;
+	double point_rho;
+	struct vector magnet_field;
 
-#endif /* MACHINE_H_ */
+	/* Modules structures */
+	extern struct module field_module;
+	extern struct module log_module;
+
+	/* Log structure */
+
+
+	/* Initialize the field module */
+	field_module_init(&field_module);
+
+	/* Initialize the log module */
+	log_module_init(&log_module);
+
+	/* Check for correct number of parameters */
+	if (argc != 8) {
+		usage(argv[0]);
+		return -1;
+	}
+
+	return 0;
+}
+
+void usage(const char *arg) {
+	printf("%s: R r n J pol tor rho\n", arg);
+}

@@ -25,6 +25,7 @@
  */
 
 #include <machine.h>
+#include <module.h>
 
 #ifndef FIELD_H_
 #define FIELD_H_
