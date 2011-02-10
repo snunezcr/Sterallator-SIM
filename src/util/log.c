@@ -136,18 +136,18 @@ void log_entry(int dbg, struct module *mod, void *addr, char *msg, int err,
 	case DEBUG_INFO:
 		sprintf(message, "[%c - %s] address: %p module: %s message: %s\n",
 			debug_acronym[DEBUG_INFO], asctime(lt_info), addr, mod->name, msg);
-		fprintf(history->file_ptr, message);
+		fprintf(history->file_ptr, "%s", message);
 		break;
 	case DEBUG_WARN:
 		sprintf(message, "[%c - %s] address: %p module: %s message: %s\n",
 			debug_acronym[DEBUG_WARN], asctime(lt_info), addr, mod->name, msg);
-		fprintf(history->file_ptr, message);
+		fprintf(history->file_ptr, "%s", message);
 		break;
 	case DEBUG_ERROR:
 		error_describe(mod, err, local_error);
 		sprintf(message, "[%c - %s] address: %p %s\n",
 			debug_acronym[DEBUG_ERROR], asctime(lt_info), addr, local_error);
-		fprintf(history->file_ptr, message);
+		fprintf(history->file_ptr, "%s", message);
 		break;
 	default:
 		break;
