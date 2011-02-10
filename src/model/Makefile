@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-c -I../include
+CFLAGS=-c -fPIC -I../include
 LINKER=ld
 LDFLAGS=-r
 
@@ -7,7 +7,9 @@ PREFIX=model
 MACH=machine
 MOD=module
 
-all: mach mod link
+STAGEDIR=../lib
+
+all: mach mod link stage
 
 mach:
 	$(CC) $(CFLAGS) $(MACH).c
@@ -18,6 +20,10 @@ mod:
 link:
 	$(LINKER) $(LDFLAGS) -o $(PREFIX).o $(MACH).o $(MOD).o
 
+stage:
+	cp $(PREFIX).o $(STAGEDIR)
+
 clean:
-	rm -f *.o
+	rm -f $(PREFIX).o
+	rm -f $(STAGEDIR)/$(PREFIX).o
 

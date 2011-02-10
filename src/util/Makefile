@@ -1,11 +1,12 @@
 CC=gcc
-CFLAGS=-c -I../include
+CFLAGS=-c -fPIC -I../include
 LINKER=ld
 LDFLAGS=-r
 
 PREFIX=log
+STAGEDIR=../lib
 
-all: build 
+all: build stage
 
 build:
 	$(CC) $(CFLAGS) $(PREFIX).c
@@ -13,6 +14,10 @@ build:
 link:
 	$(LINKER) $(LDFLAGS) -o $(PREFIX).o $(PREFIX).o
 
+stage:
+	cp $(PREFIX).o $(STAGEDIR)
+
 clean:
-	rm -f *.o
+	rm -f $(PREFIX).o
+	rm -f $(STAGEDIR)/$(PREFIX).o
 
