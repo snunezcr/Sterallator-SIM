@@ -24,6 +24,8 @@ stage:
 	cp $(PREFIX).o $(STAGEDIR)
 
 clean:
+	rm -f $(MACH).o
+	rm -f $(MOD).o
 	rm -f $(PREFIX).o
 	rm -f $(STAGEDIR)/$(PREFIX).o
 

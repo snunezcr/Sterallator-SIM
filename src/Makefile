@@ -1,4 +1,6 @@
 CC=gcc
+AR=ar
+LD=ld
 
 STAGEDIR=lib
 
@@ -10,7 +12,10 @@ SHCORE=libcore.so.1
 SHCOREVER=0.1
 SHLDFLAGS=-lc
 
-all: staging library shared
+STCORE=libcore
+STLDFLAGS=-lc -lm
+
+all: staging library shared static sweep
 
 staging:
 	mkdir -p $(STAGEDIR)
@@ -27,7 +32,18 @@ shared:
 	$(STAGEDIR)/$(MODEL).o \
 	$(STAGEDIR)/$(FIELD).o \
 	$(SHLDFLAGS)
+
+static:
+	$(LD) -r \
+		-o $(STAGEDIR)/$(STCORE).o \
+		$(STAGEDIR)/$(UTIL).o \
+		$(STAGEDIR)/$(MODEL).o \
+		$(STAGEDIR)/$(FIELD).o
+	$(AR) rcs $(STAGEDIR)/$(STCORE).a $(STAGEDIR)/$(STCORE).o
 	
+sweep:
+	rm -f $(STAGEDIR)/*.o
+
 clean:
 	make -C util clean
 	make -C model clean
