@@ -42,6 +42,4 @@
 
 #define ERROR_MAX_LENGTH	200
 
-void error_describe(const struct module *, int, char *);
-
 #endif /* ERRORS_H_ */

@@ -144,7 +144,7 @@ void log_entry(int dbg, struct module *mod, void *addr, char *msg, int err,
 		fprintf(history->file_ptr, "%s", message);
 		break;
 	case DEBUG_ERROR:
-		error_describe(mod, err, local_error);
+		log_error_describe(mod, err, local_error);
 		sprintf(message, "[%c - %s] address: %p %s\n",
 			debug_acronym[DEBUG_ERROR], asctime(lt_info), addr, local_error);
 		fprintf(history->file_ptr, "%s", message);

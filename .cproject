@@ -44,17 +44,19 @@
 </folderInfo>
 <folderInfo id="cdt.managedbuild.config.gnu.exe.debug.723779860.770273903" name="/" resourcePath="src/field">
 <toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.70817760" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.debug" unusedChildren="">
+<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.debug" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.debug"/>
 <tool id="cdt.managedbuild.tool.gnu.archiver.base.1534427858" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base.950816195"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.113567645" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.508127134">
-<option id="gnu.cpp.compiler.exe.debug.option.optimization.level.1859596525" superClass="gnu.cpp.compiler.exe.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
-<option id="gnu.cpp.compiler.exe.debug.option.debugging.level.278162044" superClass="gnu.cpp.compiler.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
+<option id="gnu.cpp.compiler.exe.debug.option.optimization.level.1859596525" name="Optimization Level" superClass="gnu.cpp.compiler.exe.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
+<option id="gnu.cpp.compiler.exe.debug.option.debugging.level.278162044" name="Debug Level" superClass="gnu.cpp.compiler.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.1216132295" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.1183343582">
-<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.exe.debug.option.optimization.level.23637769" superClass="gnu.c.compiler.exe.debug.option.optimization.level" valueType="enumerated"/>
-<option id="gnu.c.compiler.exe.debug.option.debugging.level.2117546424" superClass="gnu.c.compiler.exe.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
-<option id="gnu.c.compiler.option.include.paths.2074020103" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.exe.debug.option.optimization.level.23637769" name="Optimization Level" superClass="gnu.c.compiler.exe.debug.option.optimization.level" valueType="enumerated"/>
+<option id="gnu.c.compiler.exe.debug.option.debugging.level.2117546424" name="Debug Level" superClass="gnu.c.compiler.exe.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
+<option id="gnu.c.compiler.option.include.paths.2074020103" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${workspace_loc:/Sterallator-SIM/src/include}&quot;"/>
 </option>
+<option id="gnu.c.compiler.option.misc.other.1966820681" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -lm" valueType="string"/>
 <inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1979517903" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1329916184" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug.2009885048"/>
@@ -827,15 +829,16 @@
 </folderInfo>
 <folderInfo id="cdt.managedbuild.config.gnu.exe.release.2011945042.1122657101" name="/" resourcePath="src/model">
 <toolChain id="cdt.managedbuild.toolchain.gnu.exe.release.439186907" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.release" unusedChildren="">
+<targetPlatform id="cdt.managedbuild.target.gnu.platform.exe.release" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.exe.release"/>
 <tool id="cdt.managedbuild.tool.gnu.archiver.base.1722099810" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base.312640851"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.399596764" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.release.528448290">
-<option id="gnu.cpp.compiler.exe.release.option.optimization.level.3521729" superClass="gnu.cpp.compiler.exe.release.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
-<option id="gnu.cpp.compiler.exe.release.option.debugging.level.83990984" superClass="gnu.cpp.compiler.exe.release.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
+<option id="gnu.cpp.compiler.exe.release.option.optimization.level.3521729" name="Optimization Level" superClass="gnu.cpp.compiler.exe.release.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
+<option id="gnu.cpp.compiler.exe.release.option.debugging.level.83990984" name="Debug Level" superClass="gnu.cpp.compiler.exe.release.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.release.1496109024" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.release.1524995955">
-<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.exe.release.option.optimization.level.787735182" superClass="gnu.c.compiler.exe.release.option.optimization.level" valueType="enumerated"/>
-<option id="gnu.c.compiler.exe.release.option.debugging.level.2005554059" superClass="gnu.c.compiler.exe.release.option.debugging.level" value="gnu.c.debugging.level.none" valueType="enumerated"/>
-<option id="gnu.c.compiler.option.include.paths.1989743007" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.exe.release.option.optimization.level.787735182" name="Optimization Level" superClass="gnu.c.compiler.exe.release.option.optimization.level" valueType="enumerated"/>
+<option id="gnu.c.compiler.exe.release.option.debugging.level.2005554059" name="Debug Level" superClass="gnu.c.compiler.exe.release.option.debugging.level" value="gnu.c.debugging.level.none" valueType="enumerated"/>
+<option id="gnu.c.compiler.option.include.paths.1989743007" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${workspace_loc:/Sterallator-SIM/src/include}&quot;"/>
 </option>
 <inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1940422228" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
@@ -843,7 +846,7 @@
 <tool id="cdt.managedbuild.tool.gnu.c.linker.exe.release.1030899591" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release.2077872904"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.1246184870" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.1656830225"/>
 <tool id="cdt.managedbuild.tool.gnu.assembler.exe.release.1231297131" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.release.828706380">
-<option id="gnu.both.asm.option.include.paths.1225098870" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
+<option id="gnu.both.asm.option.include.paths.1225098870" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${workspace_loc:/Sterallator-SIM/src/include}&quot;"/>
 </option>
 <inputType id="cdt.managedbuild.tool.gnu.assembler.input.1429744069" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
