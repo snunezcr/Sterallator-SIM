@@ -137,6 +137,10 @@ int main(int argc, char *argv[]) {
 	field_compute_coil(&sterallator, coil_count, coils, &magnet_field,
 						point.poloidal, point.toroidal, point_rho);
 
+	/* Print the value of the magnetic field at the point */
+	printf("B[x]: %lf\tB[y]: %lf\tB[z]: %lf\n", magnet_field.x, magnet_field.y,
+																magnet_field.z);
+
 	/* Clean coils memory */
 	if (coils != NULL)
 		free(coils);
