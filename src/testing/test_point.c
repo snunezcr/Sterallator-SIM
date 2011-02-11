@@ -51,6 +51,9 @@ int main(int argc, char *argv[]) {
 	/* Amount of coil points */
 	int coil_count;
 
+	/* Counters */
+	int i;
+
 	/* Structures for the position and magnetic field of one location */
 	struct coil_point point;
 	double point_rho;
@@ -114,8 +117,7 @@ int main(int argc, char *argv[]) {
 															ENOERR, &history);
 
 	/* Read the file with coil coordinates */
-	coil_count = field_load_file(argv[8], coils);
-	printf("\n\n%d coil points\n\n", error);
+	coils = field_load_file(argv[8], coils, &coil_count);
 
 	if (coil_count > 0) {
 		log_entry(DEBUG_INFO, &field_module, &coils, "Coil data loaded",
@@ -125,7 +127,15 @@ int main(int argc, char *argv[]) {
 				"Coil data not loaded", EINVFILE, &history);
 	}
 
+	for (i = 0; i < coil_count; i++)
+		printf("Coil data: %lf %lf\n", coils[i].poloidal, coils[i].toroidal);
+
 	/* Compute magnetic field vector at desired location */
+	if (coils == NULL)
+		return;
+
+	field_compute_coil(&sterallator, coil_count, coils, &magnet_field,
+						point.poloidal, point.toroidal, point_rho);
 
 	/* Clean coils memory */
 	if (coils != NULL)

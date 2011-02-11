@@ -58,54 +58,53 @@ int field_count_lines(const char *file) {
 	if (in == NULL)
 		goto terminate;
 
-	while (fscanf(in, "%lf\t%lf\n", &poloidal, &toroidal) == 2) {
-		printf("Coil data: %lf %lf\n", poloidal, toroidal);
+	while (fscanf(in, "%lf\t%lf\n", &poloidal, &toroidal) == 2)
 		count++;
-	}
 
 terminate:
 	fclose(in);
 	return count;
 }
 
-int field_load_file(const char *file, struct coil_point *point) {
+struct coil_point * field_load_file(const char *file,
+										struct coil_point *point, int *count) {
 	struct coil_point *curr;
 	FILE *in;
-	int count;
 	int error;
+	int i;
 
 	error = -1;
-	count = field_count_lines(file);
+	*count = field_count_lines(file);
 
-	if (count <= 0) {
-		return -EINVFILE;
+	if (*count <= 0) {
+		return NULL;
 	}
 
 	if (point != NULL) {
-		return -ENOTNULL;
+		return NULL;
 	}
 
-	point = (struct coil_point *) malloc(count * sizeof(struct coil_point));
+	point = (struct coil_point *) malloc(*count * sizeof(struct coil_point));
 
 	if (point == NULL) {
-		return -ENULL;
+		return NULL;
 	}
 
-	for (curr = point; curr < point + count; curr++)
+	for (curr = point; curr < point + *count; curr++)
 		field_init_coil_point(curr);
 
 	in = fopen(file, "r");
 
-	for (curr = point; curr < point + count; curr++) {
-		fscanf(in, "%lf\t%lf\n", &(point->poloidal), &(point->toroidal));
-		point->poloidal *= TORADS;
-		point->toroidal *= TORADS;
+	for (curr = point; curr < point + *count; curr++) {
+		fscanf(in, "%lf\t%lf\n", &(curr->poloidal), &(curr->toroidal));
+		curr->poloidal *= TORADS;
+		curr->toroidal *= TORADS;
+		printf("\n\n%lf...\n\n", curr->poloidal);
 	}
 
 	fclose(in);
-	error = count;
 
-	return error;
+	return point;
 }
 
 void field_init_coil_point(struct coil_point *point) {

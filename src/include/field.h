@@ -44,7 +44,7 @@ struct coil_point {
 void field_module_init(struct module *);
 
 int field_count_lines(const char *);
-int field_load_file(const char *, struct coil_point *);
+struct coil_point * field_load_file(const char *, struct coil_point *, int *);
 
 void field_init_coil_point(struct coil_point *);
 int field_compute_point(const struct machine *, struct coil_point *, int, int,
