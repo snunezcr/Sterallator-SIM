@@ -30,6 +30,9 @@
 void usage(const char *);
 
 int main(int argc, char *argv[]) {
+	/* Error handler */
+	int error;
+
 	/* Parameter conversion variables */
 	double r_maj;
 	double r_min;
@@ -41,6 +44,12 @@ int main(int argc, char *argv[]) {
 
 	/* Structure that represents the machine */
 	struct machine sterallator;
+
+	/* Coil points */
+	struct coil_point *coils = NULL;
+
+	/* Amount of coil points */
+	int coil_count;
 
 	/* Structures for the position and magnetic field of one location */
 	struct coil_point point;
@@ -70,7 +79,7 @@ int main(int argc, char *argv[]) {
 	/* Check for correct number of parameters */
 	if (argc != 9) {
 		usage(argv[0]);
-		log_entry(DEBUG_INFO, &field_module, &field_module,
+		log_entry(DEBUG_ERROR, &field_module, &field_module,
 								"Incomplete parameters", EINVOPTION, &history);
 		log_close(&history);
 		return -1;
@@ -88,18 +97,46 @@ int main(int argc, char *argv[]) {
 	/* Check for R > r */
 	if (r_min >= r_maj) {
 		usage(argv[0]);
-		log_entry(DEBUG_INFO, &field_module, &field_module,
+		log_entry(DEBUG_ERROR, &field_module, &field_module,
 				"Major radius smaller than minor radius", EINVVALUE, &history);
 		log_close(&history);
 		return -1;
 	}
+
+	/* Set local point data */
+	point.poloidal = pol;
+	point.toroidal = tor;
+	point_rho = rho;
 
 	/* Set parameters of the sterallator */
 	machine_set_params(&sterallator, r_maj, r_min, n, j);
 	log_entry(DEBUG_INFO, &field_module, &sterallator, "Machine initialized",
 															ENOERR, &history);
 
+	/* Read the file with coil coordinates */
+	coil_count = field_load_file(argv[8], coils);
+	printf("\n\n%d coil points\n\n", error);
 
+	if (coil_count > 0) {
+		log_entry(DEBUG_INFO, &field_module, &coils, "Coil data loaded",
+															ENOERR, &history);
+	} else {
+		log_entry(DEBUG_ERROR, &field_module, &field_module,
+				"Coil data not loaded", EINVFILE, &history);
+	}
+
+	/* Compute magnetic field vector at desired location */
+
+	/* Clean coils memory */
+	if (coils != NULL)
+		free(coils);
+
+	/* Create start log entry */
+	log_entry(DEBUG_INFO, &log_module, &log_module, "Log module closed",
+															ENOERR, &history);
+
+	/* Close log */
+	log_close(&history);
 
 	return 0;
 }

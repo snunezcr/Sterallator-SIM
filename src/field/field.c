@@ -50,15 +50,18 @@ int field_count_lines(const char *file) {
 
 	count = 0;
 
-	if (file != NULL)
+	if (file == NULL)
 		goto terminate;
 
 	in = fopen(file, "r");
-	if (in != NULL)
+
+	if (in == NULL)
 		goto terminate;
 
-	while (fscanf(in, "%lf, %lf\n", &poloidal, &toroidal) == 2)
+	while (fscanf(in, "%lf\t%lf\n", &poloidal, &toroidal) == 2) {
+		printf("Coil data: %lf %lf\n", poloidal, toroidal);
 		count++;
+	}
 
 terminate:
 	fclose(in);
@@ -94,7 +97,7 @@ int field_load_file(const char *file, struct coil_point *point) {
 	in = fopen(file, "r");
 
 	for (curr = point; curr < point + count; curr++) {
-		fscanf(in, "%lf, %lf\n", &(point->poloidal), &(point->toroidal));
+		fscanf(in, "%lf\t%lf\n", &(point->poloidal), &(point->toroidal));
 		point->poloidal *= TORADS;
 		point->toroidal *= TORADS;
 	}
