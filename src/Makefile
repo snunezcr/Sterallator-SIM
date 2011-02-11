@@ -26,7 +26,7 @@ library:
 	make -C field
 
 shared:
-	$(CC) -shared -Wl,-soname,$(SHCORE) \
+	$(CC) -shared \
 	-o $(STAGEDIR)/$(SHCORE).$(SHCOREVER) \
 	$(STAGEDIR)/$(UTIL).o \
 	$(STAGEDIR)/$(MODEL).o \

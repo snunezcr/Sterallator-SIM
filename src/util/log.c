@@ -134,8 +134,8 @@ void log_entry(int dbg, struct module *mod, void *addr, char *msg, int err,
 
 	switch (dbg) {
 	case DEBUG_INFO:
-		sprintf(message, "[%c - %s] address: %p module: %s message: %s\n",
-			debug_acronym[DEBUG_INFO], asctime(lt_info), addr, mod->name, msg);
+		sprintf(message, "%c - address: %p module: %s message: %s %s",
+			debug_acronym[DEBUG_INFO], addr, mod->name, msg, asctime(lt_info));
 		fprintf(history->file_ptr, "%s", message);
 		break;
 	case DEBUG_WARN:

@@ -36,7 +36,7 @@ struct module field_module;
 
 void field_module_init(struct module *mod) {
 	mod->name = "Field calculation";
-	mod->debug = DEBUG_ERROR;
+	mod->debug = DEBUG_INFO;
 	mod->version_major = 1;
 	mod->version_minor = 0;
 	mod->description = "Calculates magnetic fields";
