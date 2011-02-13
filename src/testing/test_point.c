@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <errors.h>
 #include <field.h>
+#include <math.h>
 #include <log.h>
 
 #define FN_SIZE	256
@@ -43,6 +44,7 @@ int main(int argc, char *argv[]) {
 	double tor;
 	double rho;
 	int n;
+	double modulus;
 
 	/* Structure that represents the machine */
 	struct machine sterallator;
@@ -126,6 +128,11 @@ int main(int argc, char *argv[]) {
 	log_entry(DEBUG_INFO, &field_module, &sterallator,
 							"Machine initialized",								ENOERR, &history);
 
+	/* Set initial data of magnetic field */
+	magnet_field.x = 0;
+	magnet_field.y = 0;
+	magnet_field.z = 0;
+
 	/* Initialize coil filenames */
 	coil_files = (char **) malloc (n * sizeof(char *));
 
@@ -165,8 +172,15 @@ int main(int argc, char *argv[]) {
 	}
 
 	/* Print the value of the magnetic field at the point */
-	printf("B[x]: %lf\tB[y]: %lf\tB[z]: %lf\n", magnet_field.x, 
+	printf("B[x]: %lf\tB[y]: %lf\tB[z]: %lf ", magnet_field.x, 
 						magnet_field.y, magnet_field.z);
+	
+	/* Calculate modulus of magnetic field */
+	modulus += magnet_field.x * magnet_field.x;
+	modulus += magnet_field.y * magnet_field.y;
+	modulus += magnet_field.z * magnet_field.z;
+	modulus = sqrt(modulus);
+	printf("|B| = %lf\n", modulus);
 
 	/* Clean memory */
 	if (coils != NULL) {
