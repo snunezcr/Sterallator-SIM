@@ -130,20 +130,17 @@ int main(int argc, char *argv[]) {
 		log_entry(DEBUG_ERROR, &field_module, &field_module,
 				"Coil data not loaded", EINVFILE, &history);
 	}
-
-	for (i = 0; i < coil_count; i++)
-		printf("Coil data: %lf %lf\n", coils[i].poloidal, coils[i].toroidal);
-
+	
 	/* Compute magnetic field vector at desired location */
 	if (coils == NULL)
 		return;
 
 	field_compute_coil(&sterallator, coil_count, coils, &magnet_field,
-						point.poloidal, point.toroidal, point_rho);
+				point.poloidal, point.toroidal, point_rho);
 
 	/* Print the value of the magnetic field at the point */
-	printf("B[x]: %lf\tB[y]: %lf\tB[z]: %lf\n", magnet_field.x, magnet_field.y,
-																magnet_field.z);
+	printf("B[x]: %lf\tB[y]: %lf\tB[z]: %lf\n", magnet_field.x, 
+						magnet_field.y, magnet_field.z);
 
 	/* Clean coils memory */
 	if (coils != NULL)

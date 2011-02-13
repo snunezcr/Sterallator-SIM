@@ -99,7 +99,6 @@ struct coil_point * field_load_file(const char *file,
 		fscanf(in, "%lf\t%lf\n", &(curr->poloidal), &(curr->toroidal));
 		curr->poloidal *= TORADS;
 		curr->toroidal *= TORADS;
-		printf("\n\n%lf...\n\n", curr->poloidal);
 	}
 
 	fclose(in);
