@@ -27,6 +27,8 @@
 #include <field.h>
 #include <log.h>
 
+#define FN_SIZE	256
+
 void usage(const char *);
 
 int main(int argc, char *argv[]) {
@@ -46,10 +48,13 @@ int main(int argc, char *argv[]) {
 	struct machine sterallator;
 
 	/* Coil points */
-	struct coil_point *coils = NULL;
+	struct coil_point **coils;
 
 	/* Amount of coil points */
-	int coil_count;
+	int *coil_count;
+
+	/* Generator for coil filenames */
+	char **coil_files;
 
 	/* Counters */
 	int i;
@@ -76,14 +81,14 @@ int main(int argc, char *argv[]) {
 	log_open(&history, &field_module, LOG_FILE);
 
 	/* Create start log entry */
-	log_entry(DEBUG_INFO, &log_module, &log_module, "Log module initialized",
-															ENOERR, &history);
+	log_entry(DEBUG_INFO, &log_module, &log_module,
+						"Log module initialized",								ENOERR, &history);
 
 	/* Check for correct number of parameters */
 	if (argc != 9) {
 		usage(argv[0]);
 		log_entry(DEBUG_ERROR, &field_module, &field_module,
-								"Incomplete parameters", EINVOPTION, &history);
+				"Incomplete parameters", EINVOPTION, &history);
 		log_close(&history);
 		return -1;
 	}
@@ -105,7 +110,8 @@ int main(int argc, char *argv[]) {
 	if (r_min >= r_maj) {
 		usage(argv[0]);
 		log_entry(DEBUG_ERROR, &field_module, &field_module,
-				"Major radius smaller than minor radius", EINVVALUE, &history);
+				"Major radius smaller than minor radius",
+							EINVVALUE, &history);
 		log_close(&history);
 		return -1;
 	}
@@ -117,38 +123,70 @@ int main(int argc, char *argv[]) {
 
 	/* Set parameters of the sterallator */
 	machine_set_params(&sterallator, r_maj, r_min, n, j);
-	log_entry(DEBUG_INFO, &field_module, &sterallator, "Machine initialized",
-															ENOERR, &history);
+	log_entry(DEBUG_INFO, &field_module, &sterallator,
+							"Machine initialized",								ENOERR, &history);
 
-	/* Read the file with coil coordinates */
-	coils = field_load_file(argv[8], coils, &coil_count);
+	/* Initialize coil filenames */
+	coil_files = (char **) malloc (n * sizeof(char *));
 
-	if (coil_count > 0) {
-		log_entry(DEBUG_INFO, &field_module, &coils, "Coil data loaded",
-															ENOERR, &history);
-	} else {
+	for (i = 0; i < n; i++)
+		coil_files[i] = (char *) malloc(FN_SIZE);
+
+	/* Initialize coil counts */
+	coil_count = (int *) malloc(n * sizeof(int));
+
+	/* Generate coil file names */
+	for (i = 0; i < n; i++)
+		sprintf(coil_files[i], "%s/coil_%d.txt", argv[8], i);
+
+	/* Generate coil points arrays */
+	coils = (struct coil_point **) malloc(n * sizeof(struct coil_point *));
+
+	for (i = 0; i < n; i++) {
+		/* Read the file with coil coordinates */
+		coils[i] = field_load_file(coil_files[i], coils[i], 
+								&coil_count[i]);
+
+		if (coil_count[i] > 0) {
+			log_entry(DEBUG_INFO, &field_module, &coils[i],
+					"Coil data loaded", ENOERR, &history);
+		} else {
 		log_entry(DEBUG_ERROR, &field_module, &field_module,
 				"Coil data not loaded", EINVFILE, &history);
-	}
-	
-	/* Compute magnetic field vector at desired location */
-	if (coils == NULL)
-		return;
+		}
 
-	field_compute_coil(&sterallator, coil_count, coils, &magnet_field,
-				point.poloidal, point.toroidal, point_rho);
+		/* Compute magnetic field vector at desired location */
+		if (coils[i] == NULL)
+			return;
+
+		field_compute_coil(&sterallator, coil_count[i], coils[i], 
+					&magnet_field, point.poloidal,
+					point.toroidal, point_rho);
+	}
 
 	/* Print the value of the magnetic field at the point */
 	printf("B[x]: %lf\tB[y]: %lf\tB[z]: %lf\n", magnet_field.x, 
 						magnet_field.y, magnet_field.z);
 
-	/* Clean coils memory */
-	if (coils != NULL)
+	/* Clean memory */
+	if (coils != NULL) {
+		for (i = 0; i < n; i++)
+			free(coils[i]);
 		free(coils);
+	}
+	
+	if (coil_files != NULL) {
+		for (i = 0; i < n; i++)
+			free(coil_files[i]);
+		free(coil_files);
+	}
+
+	if (coil_count != NULL)
+		free(coil_count);
 
 	/* Create start log entry */
 	log_entry(DEBUG_INFO, &log_module, &log_module, "Log module closed",
-															ENOERR, &history);
+							ENOERR, &history);
 
 	/* Close log */
 	log_close(&history);
@@ -157,5 +195,5 @@ int main(int argc, char *argv[]) {
 }
 
 void usage(const char *arg) {
-	printf("%s: R r n J pol tor rho coordinates\n", arg);
+	printf("%s: R r n J pol tor rho coord-dir\n", arg);
 }

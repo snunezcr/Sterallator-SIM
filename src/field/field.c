@@ -223,9 +223,9 @@ int field_compute_point(const struct machine *mach, struct coil_point *point,
 	num_z += exp_a*exp_c*(sin_tor_a*cos_tor_m - cos_tor_m*sin_tor_a);
 
 	/* Set the appropriate vector value */
-	field->x = num_x/denom;
-	field->y = num_y/denom;
-	field->z = num_z/denom;
+	field->x += num_x/denom;
+	field->y += num_y/denom;
+	field->z += num_z/denom;
 
 	return ENOERR;
 }
