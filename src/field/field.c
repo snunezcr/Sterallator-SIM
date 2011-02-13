@@ -114,8 +114,8 @@ void field_init_coil_point(struct coil_point *point) {
 }
 
 int field_compute_point(const struct machine *mach, struct coil_point *point,
-								int count, int i, struct vector *field,
-								double poloidal, double toroidal, double rh) {
+				int count, int i, struct vector *field,
+				double poloidal, double toroidal, double rh) {
 	/* Arithmetic pre-calculations:
 	 *
 	 * In order to avoid loss in execution time, the main problem is divided
@@ -231,8 +231,8 @@ int field_compute_point(const struct machine *mach, struct coil_point *point,
 }
 
 int field_compute_coil(const struct machine *mach, int count,
-							struct coil_point *point, struct vector *field,
-							double poloidal, double toroidal, double rh) {
+				struct coil_point *point, struct vector *field,
+				double poloidal, double toroidal, double rh) {
 	int i;
 
 	for (i = 0; i < count; i++)
