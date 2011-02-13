@@ -237,11 +237,12 @@ int field_compute_coil(const struct machine *mach, int count,
 	int i;
 
 	for (i = 0; i < count; i++)
-		if (field_compute_point(mach, point, i, count, field,
-										poloidal, toroidal, rh)
-															== -EPOINTCOMP) {
+		if (field_compute_point(mach, point, count, i, field,
+						poloidal, toroidal, rh)
+							== -EPOINTCOMP) {
 			return -ECOILCOMP;
 		}
 
 	return ENOERR;
 }
+

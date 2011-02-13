@@ -48,8 +48,8 @@ struct coil_point * field_load_file(const char *, struct coil_point *, int *);
 
 void field_init_coil_point(struct coil_point *);
 int field_compute_point(const struct machine *, struct coil_point *, int, int,
-										struct vector *, double, double, double);
+					struct vector *, double, double, double);
 int field_compute_coil(const struct machine *, int, struct coil_point *,
-										struct vector *, double, double, double);
+					struct vector *, double, double, double);
 
 #endif /* FIELD_H_ */

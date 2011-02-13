@@ -97,6 +97,10 @@ int main(int argc, char *argv[]) {
 	tor = atof(argv[6]);
 	rho = atof(argv[7]);
 
+	/* Scale to radians */
+	pol *= TORADS;
+	tor *= TORADS;
+
 	/* Check for R > r */
 	if (r_min >= r_maj) {
 		usage(argv[0]);
