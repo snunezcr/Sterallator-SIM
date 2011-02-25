@@ -67,7 +67,7 @@ terminate:
 }
 
 struct coil_point * field_load_file(const char *file,
-										struct coil_point *point, int *count) {
+					struct coil_point *point, int *count) {
 	struct coil_point *curr;
 	FILE *in;
 	int error;

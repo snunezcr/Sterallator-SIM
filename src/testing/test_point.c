@@ -4,8 +4,8 @@
  * Simulation of a Sterallator device
  *
  * Authors:
- * 			Hugo Peraza Rodriguez, School of Physics, UCR
- * 			Santiago Nunez Corrales, School of Computer Science, ITCR
+ *	Hugo Peraza Rodriguez, School of Physics, UCR
+ * 	Santiago Nunez Corrales, School of Computer Science, ITCR
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
 
 	/* Create start log entry */
 	log_entry(DEBUG_INFO, &log_module, &log_module,
-						"Log module initialized",								ENOERR, &history);
+					"Log module initialized", ENOERR, &history);
 
 	/* Check for correct number of parameters */
 	if (argc != 9) {
@@ -126,7 +126,7 @@ int main(int argc, char *argv[]) {
 	/* Set parameters of the sterallator */
 	machine_set_params(&sterallator, r_maj, r_min, n, j);
 	log_entry(DEBUG_INFO, &field_module, &sterallator,
-							"Machine initialized",								ENOERR, &history);
+						"Machine initialized", ENOERR, &history);
 
 	/* Set initial data of magnetic field */
 	magnet_field.x = 0;
@@ -172,7 +172,8 @@ int main(int argc, char *argv[]) {
 	}
 
 	/* Print the value of the magnetic field at the point */
-	printf("B[x]: %lf\tB[y]: %lf\tB[z]: %lf ", magnet_field.x, 
+	printf("(%lf, %lf, %lf) B[x]: %lf\tB[y]: %lf\tB[z]: %lf\t", point.poloidal, point.toroidal,
+						point_rho, magnet_field.x, 
 						magnet_field.y, magnet_field.z);
 	
 	/* Calculate modulus of magnetic field */
