@@ -128,9 +128,11 @@ int field_compute_point(const struct machine *mach, struct coil_point *point,
 	double exp_a, exp_b, exp_c, exp_d, exp_e;
 	double exp_f, exp_g, exp_h, exp_i, exp_j;
 	double exp_k, exp_l, exp_m, exp_n, exp_o;
+	
+	double exp_aa, exp_bb, exp_dd, exp_ee;
 
 	double rj, rn, j, rho;
-	double rn_sq, rj_rn, rho_rn;
+	double rn_sq, rj_rn, rj_rho, rho_rn;
 	int n;
 
 	double denom, num_x, num_y, num_z;
@@ -159,22 +161,34 @@ int field_compute_point(const struct machine *mach, struct coil_point *point,
 	/* Precompute constant products */
 	rn_sq = rn * rn;
 	rj_rn = rj * rn;
+	rj_rho = rj * rho;
 	rho_rn = rho * rn;
 
 	/* Precompute common factors */
-	exp_a = rj + rn * cos_pol_a;
-	exp_b = rj + rn * cos_pol_b;
-	exp_c = rj + rn * cos_pol_b;
+	exp_a = rj + rn * cos_pol_b;
+	exp_c = rj + rn * cos_pol_a;
+	
+	exp_aa = rj + rn * cos_pol_a;
+	exp_bb = rj + rn * cos_pol_m;
+	
 	exp_d = sin_tor_b * sin_pol_a;
 	exp_e = sin_pol_b * sin_tor_a;
-	exp_f = sin_tor_a * sin_pol_m;
-	exp_g = sin_tor_m * sin_pol_a;
-	exp_h = sin_pol_m * sin_tor_b;
-	exp_i = sin_pol_b * sin_tor_m;
-	exp_j = cos_tor_b * sin_pol_a;
-	exp_k = sin_pol_b * cos_tor_a;
+
+	exp_dd = cos_pol_b * sin_tor_b * sin_pol_a;
+	exp_ee = sin_pol_b * sin_tor_a * cos_pol_b;
+	
+	exp_f = cos_pol_b * sin_tor_b * sin_pol_m;
+	exp_g = cos_pol_m * sin_tor_m * sin_pol_b;
+	exp_h = cos_pol_a * sin_tor_a * sin_pol_m;
+	exp_i = cos_pol_m * sin_tor_m * sin_pol_a;
+	
+
+	exp_j = sin_pol_b * cos_tor_a;
+	exp_k = sin_pol_a * cos_tor_b;
+	
 	exp_l = cos_tor_a * sin_pol_m;
 	exp_m = cos_tor_m * sin_pol_a;
+	
 	exp_n = cos_tor_b * sin_pol_m;
 	exp_o = sin_pol_b * cos_tor_m;
 
@@ -185,10 +199,10 @@ int field_compute_point(const struct machine *mach, struct coil_point *point,
 	num_z = 0;
 
 	/* Calculate the denominator */
-	denom += 0.5*rn_sq*(1 + sin_pol_a*sin_pol_b);
-	denom += rho*rho;
-	denom += 0.5*exp_a*exp_b*(cos_tor_a*cos_tor_b + sin_tor_a*sin_tor_b);
-	denom -= rj_rn*sin_pol_m*(sin_pol_a + sin_pol_b);
+	denom += 0.5 * rn_sq * (1 + sin_pol_a * sin_pol_b);
+	denom += rho * rho;
+	denom += 0.5 * exp_a * exp_b * (cos_tor_a * cos_tor_b + sin_tor_a * sin_tor_b);
+	denom -= rj_rn * sin_pol_m * (sin_pol_a + sin_pol_b);
 	denom -= exp_c*exp_a*(cos_tor_a*cos_tor_m + sin_tor_a*sin_tor_m);
 	denom -= exp_b*exp_c*(cos_tor_b*cos_tor_m + sin_tor_b*sin_tor_m);
 	denom *= 1.5;
@@ -198,19 +212,17 @@ int field_compute_point(const struct machine *mach, struct coil_point *point,
 	}
 
 	/* Calculate the x component for the magnetic field */
-	num_x += rj_rn*(exp_d - exp_e);
-	num_x += rn_sq*cos_pol_b*(exp_d - exp_e);
-	/* TODO: The following case seems odd with respect to symmetry below */
-	num_x += rj*(rho*exp_f - rn*exp_g);
-	num_x += rho_rn*(cos_pol_a*exp_f - cos_pol_m*exp_g);
-	num_x -= rj*(rho*exp_h - rn*exp_i);
-	num_x += rho_rn*cos_pol_b*(exp_h - exp_i);
+	num_x += rj_rn * (exp_d - exp_e);
+	num_x += rn_sq * (exp_dd - exp_ee);
+	num_x += rho_rn * ( (exp_f + exp_h) - (exp_g + exp_i) );
+	num_x += rj_rho * sin_pol_m * (sin_tor_a - sin_tor_b);
+	num_x += rj_rn * sin_tor_m * (sin_pol_b - sin_pol_a);
 	num_x *= MU0_4PI;
 	num_x *= j;
 	num_x *= n;
 
 	/* Calculate the y component for the magnetic field */
-	num_y -= rj_rn*(exp_j - exp_k);
+	num_y -= rj_rn * (exp_j - exp_k);
 	num_y -= rn_sq*(cos_pol_b*exp_j - cos_pol_a*exp_k);
 	num_y -= rj*(rho*exp_l - rn*exp_m);
 	num_y -= rho_rn*(cos_pol_a*exp_l - cos_pol_m*exp_m);
@@ -218,9 +230,9 @@ int field_compute_point(const struct machine *mach, struct coil_point *point,
 	num_y -= rho_rn*(cos_pol_b*exp_n - cos_pol_m*exp_o);
 
 	/* Calculate the z component for the magnetic field */
-	num_z += exp_a*exp_b*(sin_tor_a*cos_tor_b - cos_tor_b*sin_tor_a);
-	num_z += exp_b*exp_c*(sin_tor_m*cos_tor_b - cos_tor_m*sin_tor_a);
-	num_z += exp_a*exp_c*(sin_tor_a*cos_tor_m - cos_tor_m*sin_tor_a);
+	num_z += exp_a * exp_aa * (sin_tor_a * cos_tor_b - cos_tor_a * sin_tor_b);
+	num_z += exp_a * exp_bb * (sin_tor_m * cos_tor_b - cos_tor_m * sin_tor_b);
+	num_z += exp_b * exp_bb * (sin_tor_m * cos_tor_a - cos_tor_m * sin_tor_a);
 
 	/* Set the appropriate vector value */
 	field->x += num_x/denom;
